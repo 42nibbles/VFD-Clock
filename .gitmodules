@@ -1,3 +1,0 @@
-[submodule "lib/WiFiManager"]
-	path = lib/WiFiManager
-	url = https://github.com/FacepalmMute/WiFiManager
