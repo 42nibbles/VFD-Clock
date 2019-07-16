@@ -38,34 +38,35 @@
 #include <WiFiManager.h>
 #define UART_DEBUG 1
 
-// Shift Register HV5812 and Ports #############################################
+// VFD tube stuff
 #include "hv5812.h"
 #include "multiplexer.h"
 
-#include <cstdint>
+#include "stdint.h"
 
-//NTP setting
+// NTP server url
 constexpr char NTP_SERVER_NAME_S[] = "europe.pool.ntp.org";
 
-//Central European Time (Frankfurt, Paris)
+// Central European Time (Frankfurt, Paris)
 TimeChangeRule CEST = {"CEST", Last, Sun, Mar, 2, 120}; //Central European Summer Time
 TimeChangeRule CET = {"CET ", Last, Sun, Oct, 3, 60};   //Central European Standard Time
 Timezone CE(CEST, CET);
 
-//WiFiManager
-const String AP_NAME = "ESP_CLOCK" + String(ESP.getChipId());
+// Admin settings for the WiFiManager, q.v. https://github.com/tzapu/WiFiManager/
+const String AP_NAME = "ESP_VFD-CLOCK_" + String(ESP.getChipId());
 const char *AP_PASSWORD = "admin";
 
+// UDP settings for NTP socket
 static WiFiUDP _udp;
 static const unsigned int UDP_LOCAL_PORT = 2390; //local port to listen for UDP packets
 
 // Shift Register fields #############################################
 uint8_t fieldMux[6]; // field to display
 unsigned long dDelay;
+
 //Local function prototypes
 static time_t getNtpTime();
 static void uart_debug();
-static time_t old_time_utc = 0;
 
 static time_t getNtpTime()
 {
@@ -248,6 +249,7 @@ void setup()
 
 void loop()
 {
+  static time_t old_time_utc = 0;
   time_t local_time;
   time_t switch_hour;
 
