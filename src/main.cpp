@@ -1,18 +1,16 @@
 
 //Standard library includes
 /*
-  
   This clock is configured for use in the laboratory, which means the display is 
   switched on on workdays from monday to friday from 8:00 to 19:00 exept on 
   tuesday when "Open Lab" is running. The on-time on "Open Lab" is from 8.00
   to 23:00!
   On saturday and sunday the display is off!
   The ssid and the password is set on guest-network, in the FB4lab on
-  "hw1_gast" and the passwd is set to "KeineAhnung". In case of CONNECTION_FAILD
+  "*****" and the passwd is set to "*****". In case of CONNECTION_FAILD
   the internal RTC is used as time-normal.  
   Be careful to use the "Time.h" and the "TimeLib.h" from Michael Hoffmann to prevent 
   errors in calculating the time.
-
 */
 #include <Arduino.h>
 
@@ -138,6 +136,7 @@ void switchPower(uint8_t schalter)
     digitalWrite(H_OFF, HIGH);
   }
 }
+
 void setup()
 {
   // put your setup code here, to run once:
@@ -147,7 +146,7 @@ void setup()
   Serial.begin(115200);
   delay(1000);
   Serial.println("\n");
-  Serial.println("VFD Clock - Ver.0-pre005 on \nGeneric ESP8266 module");
+  Serial.println("VFD Clock - Ver 1.0 on \nGeneric ESP8266 module");
   Serial.println("Testing VFD 7-Seg - hold on for 10 secs");
   Serial.println(F("\n\n42nibbles-NTP-Timezone"));
 
