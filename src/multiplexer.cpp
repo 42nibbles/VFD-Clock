@@ -58,7 +58,7 @@ const uint8_t SEG_7[33] = {
     0b00000000, // dark
     0b00000000  // dark
 };
-#else if ACTIVE_VFR_TUBE VFR_TUBE_IV22B
+#elif ACTIVE_VFR_TUBE == VFR_TUBE_IV22B
 /*Elements of the IV22b-tubes */
 const uint8_t SEG_7[33] = {
     //  HGFEDCBA   H=decimal point not in every tube
