@@ -1,9 +1,10 @@
-/*-----------------------------------------------------
-* File: hv5812.h
-* Auth: 42nibbles DZ
-* YEAR: 2017
-* defines  shift register ports and prototypes
-//-----------------------------------------------------*/
+/**
+  \file   hv5812.h
+  \author 42nibbles DZ
+  \date   2017
+  \brief  Driver software for HV5812 shift register ic.
+  \sa     https://www.google.com/search?q=datasheet+pdf+hv5812+microchip&oq=datasheet+pdf+hv5812+microchip
+ */
 #ifndef HV5812_H
 #define HV5812_H
 
@@ -13,27 +14,20 @@
 #define SDATA 13 ///< Serial data input
 #define H_OFF 2  ///< Enable input of the switching regulator (heating)
 
-#if defined(__DOXYGEN__)
-
-/**
-  * \brief Define output of the shift register.
-  * \param contentSreg Serial data to be outputted.
-  */
-void shiftHV5812(long contentSreg);
-
-#else
-
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-    void shiftHV5812(long contentSreg);
+  /**
+   * \brief Transmit data to shift register ic.
+   * \param contentSreg ???
+   * \todo  Das hier zu Ende dokumentieren.
+   */
+  void shiftHV5812(long contentSreg);
 
 #ifdef __cplusplus
 }
 #endif
-
-#endif //__DOXYGEN__
 
 #endif //HV5812_H

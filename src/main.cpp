@@ -1,8 +1,11 @@
+/**
+  \file   main.cpp
+  \author 42nibbles DZ, "Michael Hoffmann"<michael.hoffmann@fh-dortmund.de>
+  \date   2017, 2019
+  \brief  Main firmware compilation file for the six tube VFD clock.
 
-//Standard library includes
-/*
-  This clock is configured for use in the laboratory, which means the display is 
-  switched on on workdays from monday to friday from 8:00 to 19:00 exept on 
+  This clock is configured for use in the laboratory, which means the display
+  is switched on on workdays from monday to friday from 8:00 to 19:00 exept on
   tuesday when "Open Lab" is running. The on-time on "Open Lab" is from 8.00
   to 23:00!
   On saturday and sunday the display is off!
@@ -12,9 +15,22 @@
   Be careful to use the "Time.h" and the "TimeLib.h" from Michael Hoffmann to prevent 
   errors in calculating the time.
 */
+/**
+  \mainpage 42nibbles six tube equipped VFD clock
+
+  \section intro_sec Introduction
+
+  This is the introduction.
+
+  \section install_sec Installation
+
+  \subsection step1 Step 1: Opening the box
+
+  \todo Das hier zu Ende dokumentieren.
+ */
 #include <Arduino.h>
 
-//ESP WiFi include stuff
+// ESP WiFi include stuff
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiAP.h>
 #include <ESP8266WiFiGeneric.h>
@@ -27,16 +43,15 @@
 #include <WiFiServer.h>
 #include <WiFiUdp.h>
 
-//RTC include stuff
+// RTC include stuff
 #include <DS1307RTC.h>
 #include <Time.h>
 #include <TimeLib.h>
 #include <Timezone.h>
 #include <Wire.h>
 
-//WifiManager Stuff
+// WifiManager Stuff
 #include <WiFiManager.h>
-#define UART_DEBUG 1
 
 // VFD tube stuff
 #include "hv5812.h"
@@ -47,17 +62,29 @@
 #include "cstring"
 #include "ctime"
 
-// NTP server url
+#define UART_BAUDRATE 115200UL ///< UART baudrate for info messages and the VFD Clock debug terminal.
+#define UART_DEBUG 1           ///< Activate the VFD Clock debug terminal.
+
+/// The URL of the NTP server to be used for clock synchronization.  You are advised to use the address of a NTP pool.
 constexpr char NTP_SERVER_NAME_STR[] = "europe.pool.ntp.org";
 
 // Central European Time (Frankfurt, Paris)
-const TimeChangeRule CEST = {"CEST", Last, Sun, Mar, 2, 120}; //Central European Summer Time
-const TimeChangeRule CET = {"CET ", Last, Sun, Oct, 3, 60};   //Central European Standard Time
-Timezone CE(CEST, CET);
+const TimeChangeRule CEST = {"CEST", Last, Sun, Mar, 2, 120}; ///< Rule for the Central European Summer Time.
+const TimeChangeRule CET = {"CET ", Last, Sun, Oct, 3, 60};   ///< Rule for the Central European Standard Time.
+Timezone CE(CEST, CET);                                       ///< Timezone object needed by the local time functions.
 
-// Admin settings for the WiFiManager, q.v. https://github.com/tzapu/WiFiManager/
+/**
+  \brief  Admin settings for the WiFiManager
+  \sa     https://github.com/tzapu/WiFiManager/
+  
+  The WiFiManager will try to use its saved credential settings to do a login on a WiFi access station.  If
+  this fails it will become a WiFi access station of its own.  The name is something like *VFD-CLOCK_3532264*
+  with the trailing number being the ESP Chip Id.  You can do a login to the VFD-Clock without password.
+  After this just open a new browser page to enter the WiFiManager configuration page.  You can do a network
+  scan and type your new network configuration credentials there.
+ */
 const String AP_NAME = "VFD-CLOCK_" + String(ESP.getChipId());
-const char *AP_PASSWORD = "admin";
+const char *AP_PASSWORD = "admin";  ///< \todo TODO: Malfunctional at this moment.
 
 // UDP settings for NTP socket
 static WiFiUDP _udp;
@@ -70,11 +97,12 @@ static time_t getNtpTime(void);
 static void switchPower(uint8_t schalter);
 static void uart_debug(void);
 
+/// Arduino framework standard function.
 void setup()
 {
   // Serial setup to 115200 baud.
   delay(2048UL);
-  Serial.begin(115200UL);
+  Serial.begin(UART_BAUDRATE);
   delay(256UL);
 
   // Send greetings message to serial.  Startup VFD tubes and display "  42  ".
@@ -96,10 +124,9 @@ void setup()
   digitalWrite(LE, HIGH);  // Inverted in HW
   delay(500UL);
   // VFD display greeting message "  42  "
-  const unsigned TUBE_CNT = 6U;
-  uint8_t vfd_shift_display[TUBE_CNT];
+  uint8_t vfd_shift_display[VFD_TUBE_CNT];
   // Values are 0 to 15 for '0,1,2,...,F'. 16 is ' ' (blank)
-  const uint8_t BLANK = 16;
+  const uint8_t BLANK = 16; // choosing VFD_BLANK defined in multiplexer.h would be ok, too.
   vfd_shift_display[0] = BLANK; // rightmost tube
   vfd_shift_display[1] = BLANK;
   vfd_shift_display[2] = 2;
@@ -154,6 +181,8 @@ void setup()
   Serial.println(F("\nRunning clock in endless loop..."));
 }
 
+/// Arduino framework standard function.
+/// \todo Zeitsteuerung wieder aktivieren.
 void loop()
 {
   uint8_t vfd_shift_display[6]; // Shift Register field to display
@@ -393,7 +422,7 @@ static time_t getNtpTime(void)
 {
   if (_udp.localPort() == 0)
   {
-    Serial.println("\n\nUDP port lost\n\n");
+    Serial.println("\n\nUDP client port lost\n\n");
     return -1;
   }
 
@@ -452,14 +481,14 @@ static time_t getNtpTime(void)
  */
 void switchPower(uint8_t schalter)
 {
-  if (schalter)
+  if (schalter) // turn on
   {
     // Blanking enable for shift register
     digitalWrite(BLK, HIGH);
     // VFD tube heating
     digitalWrite(H_OFF, LOW);
   }
-  else
+  else // turn off
   {
     digitalWrite(BLK, LOW);
     digitalWrite(H_OFF, HIGH);

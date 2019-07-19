@@ -97,7 +97,7 @@ const uint8_t SEG_7[33] = {
 };
 #endif
 
-void multiplexer(uint8_t fieldMux[])
+void multiplexer(const uint8_t vfd_shift_display[VFD_TUBE_CNT])
 {
   const long MUX_INT = 5;
 
@@ -112,7 +112,7 @@ void multiplexer(uint8_t fieldMux[])
   if (currMuxTime - prevMuxTime >= MUX_INT)
   {
     prevMuxTime = currMuxTime;
-    contentSreg = ((SEG_7[fieldMux[muxGate]] << 8) | SEG_7[fieldMux[muxGate + 3]] | (1 << GATE[muxGate]));
+    contentSreg = ((SEG_7[vfd_shift_display[muxGate]] << 8) | SEG_7[vfd_shift_display[muxGate + 3]] | (1 << GATE[muxGate]));
     muxCnt++; // update-time -> MUX_INT
     if (muxCnt < 100)
     {
