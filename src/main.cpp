@@ -131,6 +131,20 @@ void setup()
   //wifiManager.autoConnect();
   // if you get here you have connected to the WiFi
   Serial.println("connected...yeey :)");
+  // Datagram service will be done by UDP
+  Serial.printf("Creating UDP client port %u...", UDP_LOCAL_PORT);
+  if (_udp.begin(UDP_LOCAL_PORT) == 1)
+  {
+    Serial.println(F("\t\t\t\t\t[passed]"));
+  }
+  else
+  {
+    Serial.println(F("\t\t\t\t\t[failed]"));
+    Serial.println(F("-- bus error: unable to access clock device --"));
+    Serial.println(F("-- rebooting and going for the next round --"));
+    ESP.restart();
+    // never reach this
+  }
 
   // Startup clock systems
   Serial.println(F("\n -- 42nibbles VFD clock startup --"));
@@ -190,7 +204,7 @@ void loop()
 
     /*   Switch display on and off according to weekday  */
 
-#if 1
+#if 0
     switch (weekday(local_time))
     {
     case Sun: // Sunday
@@ -310,7 +324,7 @@ static time_t timeProvider(void)
     else
     {
       Serial.println(F("\t[passed]"));
-      Serial.printf("UTC date in internal RTC is %02i.%02i.%04i UTC\n", weekday(utc_time), month(utc_time), year(utc_time));
+      Serial.printf("UTC date in internal RTC is %02i.%02i.%04i UTC\n", day(utc_time), month(utc_time), year(utc_time));
       Serial.printf("UTC time in internal RTC is %02i:%02i:%02i UTC\n", hour(utc_time), minute(utc_time), second(utc_time));
     }
     // NTP server connection would be an usefull feature but is not mandatory.
@@ -328,7 +342,7 @@ static time_t timeProvider(void)
       RTC.set(utc_time);
       Serial.println(F("\t\t\t[passed]"));
       Serial.println(F("Time from NTP server received.  Synchronized RTC with time server."));
-      Serial.printf("UTC date from NTP server is %02i.%02i.%04i UTC\n", weekday(utc_time), month(utc_time), year(utc_time));
+      Serial.printf("UTC date from NTP server is %02i.%02i.%04i UTC\n", day(utc_time), month(utc_time), year(utc_time));
       Serial.printf("UTC time from NTP server is %02i:%02i:%02i UTC\n", hour(utc_time), minute(utc_time), second(utc_time));
     }
     runs_first_time = false;
@@ -341,13 +355,13 @@ static time_t timeProvider(void)
   {
     // Now we can synchronize clocks with time server.
     RTC.set(utc_time);
-    Serial.println(F("Time from NTP server received.  Synchronized RTC with time server."));
+    Serial.printf("Time from NTP server received.  Synchronized RTC with time server @%li UTC.\n", utc_time);
   }
   else
   {
     // Use RTC for synchronization, because there was no answer from NTP server.
     utc_time = RTC.get();
-    Serial.println(F("Syncing with internal RTC."));
+    Serial.printf("Syncing with internal RTC @%li UTC.\n", utc_time);
   }
   return utc_time;
 }
@@ -377,6 +391,12 @@ static time_t initialRtcRead(void)
 
 static time_t getNtpTime(void)
 {
+  if (_udp.localPort() == 0)
+  {
+    Serial.println("\n\nUDP port lost\n\n");
+    return -1;
+  }
+
   while (_udp.parsePacket())
     ; //discard any previously received packets
 
@@ -449,7 +469,8 @@ void switchPower(uint8_t schalter)
 void uart_debug(void)
 {
   // XXX (hoffmann): Changing the menu system is a bit difficult because
-  // of the security entry requirements for the 'w' option.
+  // of the security entry requirements for the 'w' option.  This seems
+  // to be effective, but the maintenance is a drag.
   static int entry_requirements;
   char user_input;
 
@@ -500,7 +521,7 @@ void uart_debug(void)
             delay(1024UL);
             ESP.restart();
           }
-          else 
+          else
           {
             entry_requirements |= 4;
           }
