@@ -36,7 +36,7 @@ verwendet wird!
 
 Die Uhr verwendet den unter [https://github.com/tzapu/WiFiManager](https://github.com/tzapu/WiFiManager/ "WiFiManager Library")
 beschriebenen *WiFiManager.* Diese Software versucht zuerst, die letzte funktionierende WiFi-Konfiguration zu benutzen, mit dem
-Ziel einen *WiFi Client* zu starten. Falls das nicht funktioniert, wird ein *WiFi Server* gestartet.
+Ziel, einen *WiFi Client* zu starten. Falls das nicht funktioniert, wird ein *WiFi Server* gestartet.
 
 Der Name des Servers ist *ESP_CLOCK#CHIP_ID#* - also z.B. *ESP_CLOCK3532264.*
 

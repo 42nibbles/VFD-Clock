@@ -61,27 +61,54 @@
 #include <cstring>
 #include <ctime>
 
-#ifdef __DOXYGEN__
+#ifdef DOXYGEN
 /**
- * \def USE_WIFI_NTP_SYNC
+ * \def   SUPPORT_WIFI_NTP_SYNC
  * \brief Turn off WiFi by commenting this.
  *
  * If the clock will not be able to connect to a WiFi access point it will automatically become a WiFi access point
- * and the user will be given chance to configure his WiFi settings by mobile phone or something else.  If you
- * definitely do not plan to use WiFi this might bother you, because the clock will never start displaying the
- * time.
+ * of its own and the user will be given chance to configure his WiFi settings by mobile phone or something else.
+ * If you definitely do not plan to use WiFi this might bother you, because the clock will never start displaying
+ * the time.
+ *
+ * By removing WiFi support you will not be able to synchronize against a NTP server.  Then the internal real time
+ * clock will be used for synchronizing instead.
  *
  * The configuration of WiFi is described in the README.md file.
  *
- * Hinweis: Auf Messen bitte USE_WIFI_NTP_SYNC auskommentieren, falls die Uhr ohne WiFi laufen soll.
+ * Hinweis: Auf Messen bitte SUPPORT_WIFI_NTP_SYNC auskommentieren, falls die Uhr ohne WiFi laufen soll.
  */
-#define USE_WIFI_NTP_SYNC
-#endif
+#define SUPPORT_WIFI_NTP_SYNC
 
-// Comment this if you are not going to use WiFi.
-#define USE_WIFI_NTP_SYNC
+/**
+ * \def   SUPPORT_POWER_SAVE_MODE
+ * \brief Suport of power save mode.
+ * \sa    is_idle_time()
+ *
+ * As a default the clock supports power saving.  The settings are defined in is_idle_time().  If you like to
+ * run the clock around the clock comment this.
+ *
+ * Hinweis: Auf Messen bitte SUPPORT_POWER_SAVE_MODE auskommentieren, falls die Uhr 24/7 laufen soll.
+ */
+#define SUPPORT_POWER_SAVE_MODE
+
+#else
+#define SUPPORT_WIFI_NTP_SYNC   // Comment this if you are not going to use WiFi.
+#define SUPPORT_POWER_SAVE_MODE // Comment this if you are not going to use power saving.
+#endif                          // DOXYGEN
+
 #define UART_BAUDRATE 115200UL ///< UART baudrate for info messages and the VFD Clock debug terminal.
 #define UART_DEBUG 1           ///< Activate the VFD Clock debug terminal.
+
+/**
+ * \brief Power switch setting.
+ * \sa    power_switch()
+ */
+typedef enum
+{
+  PWR_OFF = 0, ///< Power to be turned off
+  PWR_ON       ///< Power to be turned on
+} power_switch_e;
 
 /// The URL of the NTP server to be used for clock synchronization.  You are advised to use the address of a NTP pool.
 constexpr char NTP_SERVER_NAME_STR[] = "europe.pool.ntp.org";
@@ -102,7 +129,7 @@ Timezone CE(CEST, CET);                                       ///< Timezone obje
   scan and type your new network configuration credentials there.
  */
 const String AP_NAME = "VFD-CLOCK_" + String(ESP.getChipId());
-const char *AP_PASSWORD = "admin";  ///< \todo TODO: Malfunctional at this moment.
+const char *AP_PASSWORD = "admin"; ///< \todo TODO: Malfunctional at this moment.
 
 // UDP settings for NTP socket
 static WiFiUDP _udp;
@@ -112,7 +139,8 @@ static const unsigned int UDP_LOCAL_PORT = 2390; //local port to listen for UDP 
 static time_t timeProvider(void);
 static time_t initialRtcRead(void);
 static time_t getNtpTime(void);
-static void switchPower(uint8_t schalter);
+static bool is_idle_time(int weekday, int hour);
+static void power_switch(power_switch_e switch_setting);
 static void uart_debug(void);
 
 /// Arduino framework standard function.
@@ -124,7 +152,7 @@ void setup()
   delay(256UL);
 
   // Send greetings message to serial.  Startup VFD tubes and display "  42  ".
-  Serial.println(F("\n  ******   VFD Clock - Ver 1.1   ******"));
+  Serial.println(F("\n  ******   VFD Clock - Ver 1.2   ******"));
   Serial.println(F("Running on Espressif Generic ESP8266 ESP-01 1M SoC module"));
   Serial.printf("ChipId %u, %i MHz clock speed, %u bytes flash @%2.1f MHz\n", ESP.getChipId(),
                 ESP.getCpuFreqMHz(), ESP.getFlashChipSize(), (ESP.getFlashChipSpeed() / 1000000.0));
@@ -145,7 +173,7 @@ void setup()
   uint8_t vfd_output[VFD_TUBE_CNT];
   // Values are 0 to 15 for '0,1,2,...,F'. 16 is ' ' (blank)
   const uint8_t BLANK = 16; // choosing VFD_BLANK defined in multiplexer.h would be ok, too.
-  vfd_output[0] = BLANK; // rightmost tube
+  vfd_output[0] = BLANK;    // rightmost tube
   vfd_output[1] = BLANK;
   vfd_output[2] = 2;
   vfd_output[3] = 4;
@@ -159,7 +187,7 @@ void setup()
     delay(1UL);
   }
 
-#ifdef USE_WIFI_NTP_SYNC
+#ifdef SUPPORT_WIFI_NTP_SYNC
   // WiFiManager: Try last stored WiFi client settings otherwise become a configurable server ;-)
   // Local intialization. Once its business is done, there is no need to keep it around
   Serial.println(F("\n -- 42nibbles VFD network startup --"));
@@ -204,147 +232,62 @@ void setup()
 }
 
 /// Arduino framework standard function.
-/// \todo Zeitsteuerung wieder aktivieren.
 void loop()
 {
-  uint8_t vfd_output[6]; // Shift Register field to display
-  static time_t old_time_utc = 0;
-  time_t local_time;
-  time_t switch_hour;
+  static time_t old_time_utc;
+  static bool has_idle_time;
+  static int old_hour_utc = hour() - 1; // should be processed upcoming
 
   if (UART_DEBUG == 1)
   {
     uart_debug();
   }
 
+  // This has to be processed only when the next second has arrived
   if (old_time_utc != now())
   {
     old_time_utc = now();
+    // Variables for time zone calculation
     TimeChangeRule *tcr;
-    local_time = CE.toLocal(old_time_utc, &tcr);
-    int sec = second(local_time);
-    switch_hour = hour(local_time);
-#if 0
-    Serial.print("Hour-> ");
-    Serial.print(hour(local_time));
-    Serial.print("\tLocal-> ");
-    Serial.print((int)switch_hour);
-    Serial.print("\t  Weekday-> ");
-    Serial.print(weekday(local_time));
-    Serial.print("\t Tue: ");
-    Serial.println(Tue);
-#endif
-    if (sec > 55)
+    time_t local_time = CE.toLocal(old_time_utc, &tcr);
+    // Find out if the clock has arrived it's idle time
+    if (old_hour_utc != hour())
     {
-      vfd_output[0] = year(local_time) % 10;
-      vfd_output[1] = (year(local_time) - 2000) / 10; // indexing tenth of year
-      vfd_output[2] = month(local_time) % 10;         // switch on decimal point
-      vfd_output[3] = month(local_time) / 10;
-      vfd_output[4] = day(local_time) % 10; // switch on decimal point
-      vfd_output[5] = day(local_time) / 10;
+      old_hour_utc = hour();
+      has_idle_time = is_idle_time(weekday(local_time), hour(local_time));
+    }
+    // Display output if necessary
+    if (has_idle_time)
+    {
+      power_switch(PWR_OFF);
     }
     else
     {
-      vfd_output[0] = second(local_time) % 10;
-      vfd_output[1] = second(local_time) / 10;
-      vfd_output[2] = minute(local_time) % 10; // switch on decimal point
-      vfd_output[3] = minute(local_time) / 10;
-      vfd_output[4] = hour(local_time) % 10; // switch on decimal point
-      vfd_output[5] = hour(local_time) / 10;
+      power_switch(PWR_ON);
+      // Display setting
+      int sec = second(local_time);
+      uint8_t vfd_output[VFD_TUBE_CNT]; // used for VFD output
+      if (sec > 55)
+      {
+        vfd_output[0] = year(local_time) % 10;
+        vfd_output[1] = (year(local_time) - 2000) / 10; // indexing tenth of year
+        vfd_output[2] = month(local_time) % 10;
+        vfd_output[3] = month(local_time) / 10;
+        vfd_output[4] = day(local_time) % 10;
+        vfd_output[5] = day(local_time) / 10;
+        updateVfd(vfd_output, 0); // Dots are permanently turned on
+      }
+      else
+      {
+        vfd_output[0] = second(local_time) % 10;
+        vfd_output[1] = second(local_time) / 10;
+        vfd_output[2] = minute(local_time) % 10;
+        vfd_output[3] = minute(local_time) / 10;
+        vfd_output[4] = hour(local_time) % 10;
+        vfd_output[5] = hour(local_time) / 10;
+        updateVfd(vfd_output, 1000); // Blinking dots with a period of 1000 ms
+      }
     }
-    updateVfd(vfd_output, 1000);
-
-    /*   Switch display on and off according to weekday  */
-
-#if 0
-    switch (weekday(local_time))
-    {
-    case Sun: // Sunday
-      /*   Switch off */
-      switchPower(0);
-      //    digitalWrite(BLK, LOW);                         // Blanking low active
-      break;
-
-    case Mon: // Monday
-              /*   Switch on at 8:00h and off at 19:00h   */
-      if ((switch_hour < 8) || (switch_hour >= 19))
-      {
-        switchPower(0);
-        //      digitalWrite(BLK, LOW);                      // Blanking low active
-      }
-      else
-      {
-        //      digitalWrite(BLK, HIGH);
-        Serial.println("here");
-        switchPower(1);
-      }
-      break;
-    case Tue: // Tuesday
-              /*   Switch on at 8:00h and off at 23:00h   */
-      if ((switch_hour < 8) || (switch_hour >= 23))
-      {
-        switchPower(0);
-        //      digitalWrite(BLK, LOW);                      // Blanking low active
-        //      Serial.println("BLK active! ");
-      }
-      else
-      {
-        //      digitalWrite(BLK, HIGH);
-        switchPower(1);
-      }
-      break;
-    case Wed: // Wednesday
-              /*   Switch on at 8:00h and off at 19:00h   */
-      if ((switch_hour < 8) || (switch_hour >= 19))
-      {
-        //      digitalWrite(BLK, LOW);                      // Blanking low active
-        switchPower(0);
-      }
-      else
-      {
-        digitalWrite(BLK, HIGH);
-        switchPower(1);
-      }
-      break;
-    case Thu: // Thursday
-              /*   Switch on at 8:00h and off at 19:00h   */
-      if ((switch_hour < 8) || (switch_hour >= 19))
-      {
-        digitalWrite(BLK, LOW); // Blanking low active
-        switchPower(0);
-      }
-      else
-      {
-        digitalWrite(BLK, HIGH);
-        switchPower(1);
-      }
-      break;
-
-    case Fri: // Friday
-              /*   Switch on at 8:00h and off at 19:00h   */
-      if ((switch_hour < 8) || (switch_hour >= 17))
-      {
-        //      digitalWrite(BLK, LOW);                      // Blanking low active
-        switchPower(0);
-        //      Serial.print("Freitag ->");
-        //      Serial.println(switch_hour);
-      }
-      else
-      {
-        //      digitalWrite(BLK, HIGH);
-        switchPower(1);
-      }
-      break;
-    case Sat: // Saturday
-              /*   Switch  off  */
-              //    digitalWrite(BLK, LOW);
-      switchPower(0);
-      break;
-    default:
-      switchPower(0);
-      break;
-    }
-#endif
   }
 }
 
@@ -443,7 +386,7 @@ static time_t getNtpTime(void)
 {
   if (_udp.localPort() == 0)
   {
-    // Network was turned off by commenting '#define USE_WIFI_NTP_SYNC'.
+    // Network was turned off by commenting '#define SUPPORT_WIFI_NTP_SYNC'.
     return -1;
   }
 
@@ -494,29 +437,75 @@ static time_t getNtpTime(void)
 }
 
 /**
- * \brief Turns the display and heating off.
- * \param schalter Turn off is 0.  Turn on is !0.
- * 
- * The diplay and heating can be turned off.  In each case the
- * clock will run on.
+ * \brief  Determines if it is idle time.
+ * \param  weekday The weekday as given by weekday()
+ * \param  hour The hour as given by hour()
+ * \return true if it is idle time, else false.
  */
-void switchPower(uint8_t schalter)
+static bool is_idle_time(int weekday, int hour)
 {
-  if (schalter) // turn on
+  // If power saving is not supported we will never have idle time.
+#ifndef SUPPORT_POWER_SAVE_MODE
+  return false;
+#endif
+
+  // Weekend detection - week end means idle time
+  bool is_idle = false;
+  switch (weekday)
   {
-    // Blanking enable for shift register
-    digitalWrite(BLK, HIGH);
-    // VFD tube heating
-    digitalWrite(H_OFF, LOW);
+  case Sat:
+  case Sun:
+    is_idle = true;
+    return is_idle;
+    // Never reached
   }
-  else // turn off
+
+  // "Day of the Open Lab" at tuesday
+  is_idle = false;
+  if ((weekday == Tue) && (hour < 8 || hour >= 23))
   {
+    is_idle = true;
+  }
+  // Friday setting
+  if ((weekday == Fri) && (hour < 8 || hour >= 17))
+  {
+    is_idle = true;
+  }
+  // All else
+  if (hour < 8 || hour >= 19)
+  {
+    is_idle = true;
+  }
+  return is_idle;
+}
+
+/**
+ * \brief Turns the display and heating off.
+ * \param switch_setting Turn off if PWR_OFF, else turn on.
+ * \sa    power_switch_e
+ * 
+ * The display and heating can be turned off.  In each case the clock will run on.
+ */
+static void power_switch(power_switch_e switch_setting)
+{
+  switch (switch_setting)
+  {
+  case PWR_ON:
+    // No blanking for shift register.
+    digitalWrite(BLK, HIGH);
+    // Turn on VFD tube heating wire.
+    digitalWrite(H_OFF, LOW);
+    break;
+  case PWR_OFF:
+    // Blanking enable for shift register.
     digitalWrite(BLK, LOW);
+    // Turn off VFD tube heating.
     digitalWrite(H_OFF, HIGH);
+    break;
   }
 }
 
-void uart_debug(void)
+static void uart_debug(void)
 {
   // XXX (hoffmann): Changing the menu system is a bit difficult because
   // of the security entry requirements for the 'w' option.  This seems
