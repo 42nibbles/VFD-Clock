@@ -444,37 +444,30 @@ static time_t getNtpTime(void)
  */
 static bool is_idle_time(int weekday, int hour)
 {
+  bool is_idle = false;
+
   // If power saving is not supported we will never have idle time.
 #ifndef SUPPORT_POWER_SAVE_MODE
-  return false;
+  return is_idle;
 #endif
 
-  // Weekend detection - week end means idle time
-  bool is_idle = false;
   switch (weekday)
   {
-  case Sat:
+  case Sat: // Weekend detection-week end means idle time
   case Sun:
     is_idle = true;
-    return is_idle;
-    // Never reached
-  }
-
-  // "Day of the Open Lab" at tuesday
-  is_idle = false;
-  if ((weekday == Tue) && (hour < 8 || hour >= 23))
-  {
-    is_idle = true;
-  }
-  // Friday setting
-  if ((weekday == Fri) && (hour < 8 || hour >= 17))
-  {
-    is_idle = true;
-  }
-  // All else
-  if (hour < 8 || hour >= 19)
-  {
-    is_idle = true;
+    break;
+  case Tue: // "Day of the Open Lab" at tuesday
+    if (hour < 8 || hour >= 23)
+      is_idle = true;
+    break;
+  case Fri: // Friday setting
+    if (hour < 8 || hour >= 17)
+      is_idle = true;
+    break;
+  default: // All else
+    if (hour < 8 || hour >= 19)
+      is_idle = true;
   }
   return is_idle;
 }

@@ -1,0 +1,36 @@
+> Executing task: platformio device monitor <
+
+--- Miniterm on /dev/ttyUSB1  115200,8,N,1 ---
+--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 25.07.2019 UTC
+UTC time in internal RTC is 14:46:00 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [failed]
+Using internal real time clock for this time.
+(Retrying further NTP queries later.)
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564066262 UTC.
