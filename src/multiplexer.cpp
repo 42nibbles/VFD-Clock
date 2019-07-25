@@ -100,34 +100,69 @@ const uint8_t SEG_7[33] = {
 };
 #endif
 
-constexpr uint16_t US_PRO_MS = 1000;
-constexpr uint8_t TICKS_PRO_US = 5; // 5 ticks/us if timer1_enable(TIM_DIV16,...)
-constexpr uint32_t TIMER_TICKS = VFD_REFRESH_MS_PERIOD * US_PRO_MS * TICKS_PRO_US;
+// Local constants
+static const uint16_t US_PRO_MS = 1000;
+static const uint8_t TICKS_PRO_US = 5; // 5 ticks/us if timer1_enable(TIM_DIV16,...)
+static const uint32_t TIMER_TICKS = VFD_REFRESH_MS_PERIOD * US_PRO_MS * TICKS_PRO_US;
+
+// Local variables
 static uint8_t _vfd_output[VFD_TUBE_CNT];
 static int _dot_blink_ms_half_period;
-static bool _has_updated;
+static bool _vfd_update_necessary;
 
-static void ICACHE_RAM_ATTR onTimerISR()
+// Local function prototypes
+static void ICACHE_RAM_ATTR vfd_refresh_callback();
+
+void updateVfd(const uint8_t vfd_output[VFD_TUBE_CNT], int dot_blink_ms_period)
+{
+  static bool has_to_be_configured = true;
+
+  // Parameter copy for interrupt handler function
+  // TODO: Maybe we should lock timer interrupt while doing this?
+  memcpy(_vfd_output, vfd_output, sizeof(vfd_output[0]) * VFD_TUBE_CNT);
+  // The dot thing is special
+  if (dot_blink_ms_period < 0)
+    _dot_blink_ms_half_period = -1;
+  else
+    _dot_blink_ms_half_period = dot_blink_ms_period / 2;
+  // Sync with interrupt
+  _vfd_update_necessary = true;
+  // This has to be done only once
+  if (has_to_be_configured)
+  {
+    timer1_attachInterrupt(vfd_refresh_callback);
+    timer1_enable(TIM_DIV16, TIM_EDGE, TIM_SINGLE);
+    timer1_write(TIMER_TICKS); // 5 ms refresh rate for VFD tubes
+    has_to_be_configured = false;
+  }
+}
+
+//********************************************************************
+// Local functions
+//********************************************************************
+
+// This callback function should be called by timer ISR.
+static void ICACHE_RAM_ATTR vfd_refresh_callback()
 {
   static bool dot_is_on = true;
-  static int ms_counter;
+  static int ms_counter_for_dot_logic;
   static uint8_t mux_gate;
 
   // Logic for toggling tube dots
   if (_dot_blink_ms_half_period > 0)
   { // If there is a valid period defined this means toggling
     // Dot synchronization with output
-    if (_has_updated == true)
+    if (_vfd_update_necessary == true)
     {
-      ms_counter = _dot_blink_ms_half_period / 2;
-      _has_updated = false;
+      ms_counter_for_dot_logic = _dot_blink_ms_half_period;
+      _vfd_update_necessary = false;
     }
     // Count the time until next toggle
-    ms_counter += VFD_REFRESH_MS_PERIOD;
-    if (ms_counter >= _dot_blink_ms_half_period)
+    ms_counter_for_dot_logic += VFD_REFRESH_MS_PERIOD;
+    if (ms_counter_for_dot_logic >= _dot_blink_ms_half_period)
     {
       dot_is_on = !dot_is_on;
-      ms_counter = 0;
+      ms_counter_for_dot_logic = 0;
     }
   }
   else if (_dot_blink_ms_half_period < 0)
@@ -153,28 +188,4 @@ static void ICACHE_RAM_ATTR onTimerISR()
   if (++mux_gate > 2)
     mux_gate = 0;
   timer1_write(TIMER_TICKS); // 5 ms refresh rate for VFD tubes
-}
-
-void updateVfd(const uint8_t vfd_output[VFD_TUBE_CNT], int dot_blink_ms_period)
-{
-  static bool has_to_be_configured = true;
-
-  // Parameter copy for interrupt handler function
-  // TODO: Maybe we should lock timer interrupt while doing this?
-  memcpy(_vfd_output, vfd_output, sizeof(vfd_output[0]) * VFD_TUBE_CNT);
-  // The dot thing is special
-  if (dot_blink_ms_period < 0)
-    _dot_blink_ms_half_period = -1;
-  else
-    _dot_blink_ms_half_period = dot_blink_ms_period / 2;
-  // Sync with interrupt
-  _has_updated = true;
-  // This has to be done only once
-  if (has_to_be_configured)
-  {
-    timer1_attachInterrupt(onTimerISR);
-    timer1_enable(TIM_DIV16, TIM_EDGE, TIM_SINGLE);
-    timer1_write(TIMER_TICKS); // 5 ms refresh rate for VFD tubes
-    has_to_be_configured = false;
-  }
 }

@@ -30,8 +30,9 @@ extern "C"
   /**
    * \brief Output digits to VFD display.
    * \param vfd_output[] Array of digits to be displayed.
-   * \param dot_blink_ms_period The period for dot blinking in milliseconds. Zero means "no blinking".
+   * \param dot_blink_ms_period Control of dot blinking behaviour.
    * \sa    VFD_TUBE_CNT
+   * \sa    VFD_BLANK
    *
    * Each particular tube is dedicated to a element of the vfd_output array.  If
    * MAX_TUBE_CNT is six  the element [0] is the rightmost tube and the element [5] the
@@ -39,9 +40,9 @@ extern "C"
    *
    * The used tubes are VFD-7-Segement tubes so we are able to display 16 digits from 
    * '<kbd>0,1,2,...,F</kbd>'.  Valid values for the digits are from 0 to 15.  A special
-   * value is 16 which means <kbd>' '</kbd> (blank).
+   * value is 16 which means <kbd>' '</kbd> (blank).  This value is also defined in VFD_BLANK.
    *
-   * So this source code would be used for displaying <kbd>"  42  "</kbd> for four seconds:
+   * So this source code could be used for displaying <kbd>"  42  "</kbd> for four seconds:
     \code{.c}
     // VFD display greeting message "  42  " for 4 seconds.
     // Don't forget to do i/o setup before this.
@@ -65,6 +66,11 @@ extern "C"
    *
    * At this moment the refresh rate of the Display is 5 milliseconds. So the resolution of
    * dot_blink_ms_period is 5 ms, too.
+   *
+   * If you set dot_blink_ms_period to 0 the dots are continuously turned on.  If you put
+   * this to a negative number the dots are continuously turned off.  Otherwise you can set
+   * a period time of e.g. 1000 ms, that would be synchronous with your tubes displaying the
+   * value of the seconds.
    */
   void updateVfd(const uint8_t vfd_output[VFD_TUBE_CNT], int dot_blink_ms_period=0);
 
