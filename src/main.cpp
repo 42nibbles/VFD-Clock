@@ -45,7 +45,6 @@
 
 // RTC include stuff
 #include <DS1307RTC.h>
-#include <Time.h>
 #include <TimeLib.h>
 #include <Timezone.h>
 #include <Wire.h>
@@ -57,11 +56,30 @@
 #include "hv5812.h"
 #include "multiplexer.h"
 
-#include "string"
-#include "cstdint"
-#include "cstring"
-#include "ctime"
+#include <string>
+#include <cstdint>
+#include <cstring>
+#include <ctime>
 
+#ifdef __DOXYGEN__
+/**
+ * \def USE_WIFI_NTP_SYNC
+ * \brief Turn off WiFi by commenting this.
+ *
+ * If the clock will not be able to connect to a WiFi access point it will automatically become a WiFi access point
+ * and the user will be given chance to configure his WiFi settings by mobile phone or something else.  If you
+ * definitely do not plan to use WiFi this might bother you, because the clock will never start displaying the
+ * time.
+ *
+ * The configuration of WiFi is described in the README.md file.
+ *
+ * Hinweis: Auf Messen bitte USE_WIFI_NTP_SYNC auskommentieren, falls die Uhr ohne WiFi laufen soll.
+ */
+#define USE_WIFI_NTP_SYNC
+#endif
+
+// Comment this if you are not going to use WiFi.
+#define USE_WIFI_NTP_SYNC
 #define UART_BAUDRATE 115200UL ///< UART baudrate for info messages and the VFD Clock debug terminal.
 #define UART_DEBUG 1           ///< Activate the VFD Clock debug terminal.
 
@@ -124,23 +142,24 @@ void setup()
   digitalWrite(LE, HIGH);  // Inverted in HW
   delay(500UL);
   // VFD display greeting message "  42  "
-  uint8_t vfd_shift_display[VFD_TUBE_CNT];
+  uint8_t vfd_output[VFD_TUBE_CNT];
   // Values are 0 to 15 for '0,1,2,...,F'. 16 is ' ' (blank)
   const uint8_t BLANK = 16; // choosing VFD_BLANK defined in multiplexer.h would be ok, too.
-  vfd_shift_display[0] = BLANK; // rightmost tube
-  vfd_shift_display[1] = BLANK;
-  vfd_shift_display[2] = 2;
-  vfd_shift_display[3] = 4;
-  vfd_shift_display[4] = BLANK;
-  vfd_shift_display[5] = BLANK; // leftmost tube
+  vfd_output[0] = BLANK; // rightmost tube
+  vfd_output[1] = BLANK;
+  vfd_output[2] = 2;
+  vfd_output[3] = 4;
+  vfd_output[4] = BLANK;
+  vfd_output[5] = BLANK; // leftmost tube
   const unsigned long DISPLAY_DELAY_MILLIS = 4000UL;
   const unsigned long START_MILLIS = millis();
   while ((millis() - START_MILLIS) < DISPLAY_DELAY_MILLIS)
   {
-    multiplexer(vfd_shift_display);
+    updateVfd(vfd_output, -1);
     delay(1UL);
   }
 
+#ifdef USE_WIFI_NTP_SYNC
   // WiFiManager: Try last stored WiFi client settings otherwise become a configurable server ;-)
   // Local intialization. Once its business is done, there is no need to keep it around
   Serial.println(F("\n -- 42nibbles VFD network startup --"));
@@ -172,6 +191,9 @@ void setup()
     ESP.restart();
     // never reach this
   }
+#else
+  Serial.println(F("\nNo WiFi functionality was intended in this firmware\n -- NTP will not sync... --"));
+#endif
 
   // Startup clock systems
   Serial.println(F("\n -- 42nibbles VFD clock startup --"));
@@ -185,7 +207,7 @@ void setup()
 /// \todo Zeitsteuerung wieder aktivieren.
 void loop()
 {
-  uint8_t vfd_shift_display[6]; // Shift Register field to display
+  uint8_t vfd_output[6]; // Shift Register field to display
   static time_t old_time_utc = 0;
   time_t local_time;
   time_t switch_hour;
@@ -214,22 +236,23 @@ void loop()
 #endif
     if (sec > 55)
     {
-      vfd_shift_display[0] = year(local_time) % 10;
-      vfd_shift_display[1] = (year(local_time) - 2000) / 10; // indexing tenth of year
-      vfd_shift_display[2] = month(local_time) % 10;         // switch on decimal point
-      vfd_shift_display[3] = month(local_time) / 10;
-      vfd_shift_display[4] = day(local_time) % 10; // switch on decimal point
-      vfd_shift_display[5] = day(local_time) / 10;
+      vfd_output[0] = year(local_time) % 10;
+      vfd_output[1] = (year(local_time) - 2000) / 10; // indexing tenth of year
+      vfd_output[2] = month(local_time) % 10;         // switch on decimal point
+      vfd_output[3] = month(local_time) / 10;
+      vfd_output[4] = day(local_time) % 10; // switch on decimal point
+      vfd_output[5] = day(local_time) / 10;
     }
     else
     {
-      vfd_shift_display[0] = second(local_time) % 10;
-      vfd_shift_display[1] = second(local_time) / 10;
-      vfd_shift_display[2] = minute(local_time) % 10; // switch on decimal point
-      vfd_shift_display[3] = minute(local_time) / 10;
-      vfd_shift_display[4] = hour(local_time) % 10; // switch on decimal point
-      vfd_shift_display[5] = hour(local_time) / 10;
+      vfd_output[0] = second(local_time) % 10;
+      vfd_output[1] = second(local_time) / 10;
+      vfd_output[2] = minute(local_time) % 10; // switch on decimal point
+      vfd_output[3] = minute(local_time) / 10;
+      vfd_output[4] = hour(local_time) % 10; // switch on decimal point
+      vfd_output[5] = hour(local_time) / 10;
     }
+    updateVfd(vfd_output, 1000);
 
     /*   Switch display on and off according to weekday  */
 
@@ -323,8 +346,6 @@ void loop()
     }
 #endif
   }
-
-  multiplexer(vfd_shift_display);
 }
 
 //********************************************************************
@@ -422,7 +443,7 @@ static time_t getNtpTime(void)
 {
   if (_udp.localPort() == 0)
   {
-    Serial.println("\n\nUDP client port lost\n\n");
+    // Network was turned off by commenting '#define USE_WIFI_NTP_SYNC'.
     return -1;
   }
 

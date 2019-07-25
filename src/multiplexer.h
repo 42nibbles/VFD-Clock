@@ -12,12 +12,15 @@
 #ifndef MULTIPLEXER_H
 #define MULTIPLEXER_H
 
-#include <stdint.h>
+#include <cstdint>
 
 /// Count of accessible VFD tubes connected to the multiplexer.
 const unsigned VFD_TUBE_CNT = 6U;
 /// Special 'blank character' value for multiplexer() array for turning tube temporarily off.
 const uint8_t VFD_BLANK = 16;
+/// Refreshed tubes each 5 milliseconds.
+const uint8_t VFD_REFRESH_MS_PERIOD = 5;
+
 
 #ifdef __cplusplus
 extern "C"
@@ -26,10 +29,11 @@ extern "C"
 
   /**
    * \brief Output digits to VFD display.
-   * \param vfd_shift_display[] Array of digits to be displayed.
+   * \param vfd_output[] Array of digits to be displayed.
+   * \param dot_blink_ms_period The period for dot blinking in milliseconds. Zero means "no blinking".
    * \sa    VFD_TUBE_CNT
    *
-   * Each particular tube is dedicated to a element of the vfd_shift_display array.  If
+   * Each particular tube is dedicated to a element of the vfd_output array.  If
    * MAX_TUBE_CNT is six  the element [0] is the rightmost tube and the element [5] the
    * leftmost tube.
    *
@@ -41,23 +45,28 @@ extern "C"
     \code{.c}
     // VFD display greeting message "  42  " for 4 seconds.
     // Don't forget to do i/o setup before this.
-    uint8_t vfd_shift_display[VFD_TUBE_CNT];
+    // VFD display greeting message "  42  "
+    uint8_t vfd_output[VFD_TUBE_CNT];
     // Values are 0 to 15 for '0,1,2,...,F'. 16 is ' ' (blank)
-    vfd_shift_display[0] = VFD_BLANK; // rightmost tube
-    vfd_shift_display[1] = VFD_BLANK;
-    vfd_shift_display[2] = 2;
-    vfd_shift_display[3] = 4;
-    vfd_shift_display[4] = VFD_BLANK;
-    vfd_shift_display[5] = VFD_BLANK; // leftmost tube
+    const uint8_t BLANK = 16; // choosing VFD_BLANK defined in multiplexer.h would be ok, too.
+    vfd_output[0] = BLANK; // rightmost tube
+    vfd_output[1] = BLANK;
+    vfd_output[2] = 2;
+    vfd_output[3] = 4;
+    vfd_output[4] = BLANK;
+    vfd_output[5] = BLANK; // leftmost tube
     const unsigned long DISPLAY_DELAY_MILLIS = 4000UL;
     const unsigned long START_MILLIS = millis();
     while ((millis() - START_MILLIS) < DISPLAY_DELAY_MILLIS) {
-      multiplexer(vfd_shift_display);
+      updateVfd(vfd_output);
       delay(1UL);
     }
     \endcode
+   *
+   * At this moment the refresh rate of the Display is 5 milliseconds. So the resolution of
+   * dot_blink_ms_period is 5 ms, too.
    */
-  void multiplexer(const uint8_t vfd_shift_display[VFD_TUBE_CNT]);
+  void updateVfd(const uint8_t vfd_output[VFD_TUBE_CNT], int dot_blink_ms_period=0);
 
 #ifdef __cplusplus
 }

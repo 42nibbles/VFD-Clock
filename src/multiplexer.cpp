@@ -1,6 +1,9 @@
+#include <Arduino.h>
 #include "multiplexer.h"
 #include "hv5812.h"
-#include <Arduino.h>
+#include <Ticker.h>
+#include <cstdbool>
+#include <cstring>
 
 // Don't change this.  It's only for the internal build logic.
 #define VFR_TUBE_IV3A 1
@@ -97,47 +100,81 @@ const uint8_t SEG_7[33] = {
 };
 #endif
 
-void multiplexer(const uint8_t vfd_shift_display[VFD_TUBE_CNT])
+constexpr uint16_t US_PRO_MS = 1000;
+constexpr uint8_t TICKS_PRO_US = 5; // 5 ticks/us if timer1_enable(TIM_DIV16,...)
+constexpr uint32_t TIMER_TICKS = VFD_REFRESH_MS_PERIOD * US_PRO_MS * TICKS_PRO_US;
+static uint8_t _vfd_output[VFD_TUBE_CNT];
+static int _dot_blink_ms_half_period;
+static bool _has_updated;
+
+static void ICACHE_RAM_ATTR onTimerISR()
 {
-  const long MUX_INT = 5;
+  static bool dot_is_on = true;
+  static int ms_counter;
+  static uint8_t mux_gate;
 
-  static unsigned long prevMuxTime;
-  unsigned long currMuxTime;
-  long contentSreg;
-
-  static uint8_t muxGate;
-  static uint8_t muxCnt;
-
-  currMuxTime = millis();
-  if (currMuxTime - prevMuxTime >= MUX_INT)
+  // Logic for toggling tube dots
+  if (_dot_blink_ms_half_period > 0)
+  { // If there is a valid period defined this means toggling
+    // Dot synchronization with output
+    if (_has_updated == true)
+    {
+      ms_counter = _dot_blink_ms_half_period / 2;
+      _has_updated = false;
+    }
+    // Count the time until next toggle
+    ms_counter += VFD_REFRESH_MS_PERIOD;
+    if (ms_counter >= _dot_blink_ms_half_period)
+    {
+      dot_is_on = !dot_is_on;
+      ms_counter = 0;
+    }
+  }
+  else if (_dot_blink_ms_half_period < 0)
+  { // It there is a negative period defined this means turn off
+    dot_is_on = false;
+  }
+  else
+  { // It there is no period defined this means turn on
+    dot_is_on = true;
+  }
+  // Compute value for the output shift register
+  long content_sreg = ((SEG_7[_vfd_output[mux_gate]] << 8) | SEG_7[_vfd_output[mux_gate + 3]] | (1 << GATE[mux_gate]));
+  if (dot_is_on)
   {
-    prevMuxTime = currMuxTime;
-    contentSreg = ((SEG_7[vfd_shift_display[muxGate]] << 8) | SEG_7[vfd_shift_display[muxGate + 3]] | (1 << GATE[muxGate]));
-    muxCnt++; // update-time -> MUX_INT
-    if (muxCnt < 100)
-    {
-      if (muxGate == 1)
-      {
-        contentSreg |= TAG_DP;
-      }
-      if (muxGate == 2)
-      {
-        contentSreg |= MONAT_DP;
-      }
-    }
-    else
-    {
-      if (muxCnt > 200)
-      {
-        muxCnt = 0;
-      }
-    }
-    shiftHV5812(contentSreg);
-    muxGate++;
-    if (muxGate > 2)
-    {
-      muxGate = 0;
-    }
-    contentSreg = 0;
+    if (mux_gate == 1)
+      content_sreg |= TAG_DP;
+    if (mux_gate == 2)
+      content_sreg |= MONAT_DP;
+  }
+  // Send this to shift register for output
+  shiftHV5812(content_sreg);
+  // Select gate for the next round
+  if (++mux_gate > 2)
+    mux_gate = 0;
+  timer1_write(TIMER_TICKS); // 5 ms refresh rate for VFD tubes
+}
+
+void updateVfd(const uint8_t vfd_output[VFD_TUBE_CNT], int dot_blink_ms_period)
+{
+  static bool has_to_be_configured = true;
+
+  // Parameter copy for interrupt handler function
+  // TODO: Maybe we should lock timer interrupt while doing this?
+  memcpy(_vfd_output, vfd_output, sizeof(vfd_output[0]) * VFD_TUBE_CNT);
+  // The dot thing is special
+  if (dot_blink_ms_period < 0)
+    _dot_blink_ms_half_period = -1;
+  else
+    _dot_blink_ms_half_period = dot_blink_ms_period / 2;
+  // Sync with interrupt
+  _has_updated = true;
+  // This has to be done only once
+  if (has_to_be_configured)
+  {
+    timer1_attachInterrupt(onTimerISR);
+    timer1_enable(TIM_DIV16, TIM_EDGE, TIM_SINGLE);
+    timer1_write(TIMER_TICKS); // 5 ms refresh rate for VFD tubes
+    has_to_be_configured = false;
   }
 }
