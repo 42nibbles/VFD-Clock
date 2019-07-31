@@ -54,7 +54,7 @@
 
 // VFD tube stuff
 #include "hv5812.h"
-#include "multiplexer.h"
+#include "multiplexing.h"
 
 #include <string>
 #include <cstdint>
@@ -131,6 +131,12 @@ Timezone CE(CEST, CET);                                       ///< Timezone obje
 const String AP_NAME = "VFD-CLOCK_" + String(ESP.getChipId());
 const char *AP_PASSWORD = "admin"; ///< \todo TODO: Malfunctional at this moment.
 
+#define IODEF_VFD_DRIVER_BLANKING 16 ///< Blanking input
+#define IODEF_VFD_DRIVER_STROBE 14   ///< Latch enable/Chip select
+#define IODEF_VFD_DRIVER_CLOCK 12    ///< Clock input
+#define IODEF_VFD_DRIVER_SDATA_IN 13 ///< Serial data input
+#define IODEF_VFD_HEATING 2          ///< Enable input of the switching regulator (heating)
+
 // UDP settings for NTP socket
 static WiFiUDP _udp;
 static const unsigned int UDP_LOCAL_PORT = 2390; //local port to listen for UDP packets
@@ -159,16 +165,12 @@ void setup()
   Serial.println(F("\n -- VFD 8 tubes 7-Seg display startup --"));
   Serial.println(F("Setting blanking inactive and turn on heating"));
   Serial.println(F("Your display should indicate \"  42  \" now"));
-  // I/O configuration
-  pinMode(BLK, OUTPUT);   // Blanking Command input
-  pinMode(LE, OUTPUT);    // Latch Enable Command input
-  pinMode(CLK, OUTPUT);   // Shift Register clk input
-  pinMode(SDATA, OUTPUT); // Shift Register data input
-  pinMode(H_OFF, OUTPUT); // Heating control
+  // I/O mode configuration
+  HV5812_init(IODEF_VFD_DRIVER_BLANKING, IODEF_VFD_DRIVER_STROBE, IODEF_VFD_DRIVER_CLOCK, IODEF_VFD_DRIVER_SDATA_IN);
+  pinMode(IODEF_VFD_HEATING, OUTPUT); // Heating control
   // External hardware configuration
-  digitalWrite(BLK, HIGH); // Blanking low active
-  digitalWrite(LE, HIGH);  // Inverted in HW
-  delay(500UL);
+  power_switch(PWR_ON);
+  delay(512UL);
   // VFD display greeting message "  42  "
   uint8_t vfd_output[VFD_TUBE_CNT];
   // Values are 0 to 15 for '0,1,2,...,F'. 16 is ' ' (blank)
@@ -183,9 +185,10 @@ void setup()
   const unsigned long START_MILLIS = millis();
   while ((millis() - START_MILLIS) < DISPLAY_DELAY_MILLIS)
   {
-    updateVfd(vfd_output, -1);
+    setVfd(vfd_output);
     delay(1UL);
   }
+  clearVfd();
 
 #ifdef SUPPORT_WIFI_NTP_SYNC
   // WiFiManager: Try last stored WiFi client settings otherwise become a configurable server ;-)
@@ -485,15 +488,15 @@ static void power_switch(power_switch_e switch_setting)
   {
   case PWR_ON:
     // No blanking for shift register.
-    digitalWrite(BLK, HIGH);
+    HV5812_blanking(BLANKING_OFF);
     // Turn on VFD tube heating wire.
-    digitalWrite(H_OFF, LOW);
+    digitalWrite(IODEF_VFD_HEATING, LOW);
     break;
   case PWR_OFF:
     // Blanking enable for shift register.
-    digitalWrite(BLK, LOW);
+    HV5812_blanking(BLANKING_ON);
     // Turn off VFD tube heating.
-    digitalWrite(H_OFF, HIGH);
+    digitalWrite(IODEF_VFD_HEATING, HIGH);
     break;
   }
 }
@@ -523,6 +526,8 @@ static void uart_debug(void)
       break;
       // restart ESP
     case 'r':
+      logOffVfd();
+      clearVfd();
       ESP.restart();
       break;
       // restart ESP
@@ -540,6 +545,8 @@ static void uart_debug(void)
         {
           if (entry_requirements & 4)
           {
+            logOffVfd();
+            clearVfd();
             entry_requirements = 0;
             Serial.println(F("\n\n**********\nErasing your credentials."));
             Serial.print(F("Do a WiFi scan and login on device "));

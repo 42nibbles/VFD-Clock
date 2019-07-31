@@ -1,4 +1,4 @@
-# VFD Clock_1.1
+# VFD Clock_1.2
 
 ## Übersetzen unter Windows
 
@@ -8,7 +8,7 @@ geladen. In _Visual Studio Code_ wird das wahrscheinlich links in der _Folder-An
 finden sein.
 
 * Dort befindet sich eine Datei _Time.h._ Da Windows nicht zwischen Groß- und Kleinschreibung unterscheidet, gibt es Konflikte
-mit der Systemdatei _time.h._
+mit der gleichnamigen Systemdatei _time.h._
 
 Dieses Thema wurde zum gegenwärtigen Zeitpunkt im PlatformIO-Forum diskutiert, aber noch nicht gelöst. Aus diesem Grund wird das
 folgende Vorgehen vorgeschlagen:

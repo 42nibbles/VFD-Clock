@@ -1,0 +1,686 @@
+> Executing task: platformio device monitor <
+
+--- Miniterm on /dev/ttyUSB1  115200,8,N,1 ---
+--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 25.07.2019 UTC
+UTC time in internal RTC is 15:25:53 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 25.07.2019 UTC
+UTC time from NTP server is 15:25:55 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564068656 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564068957 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564069258 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564069559 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564069860 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564070161 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564070462 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564070763 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564071064 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564071365 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564071666 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564071967 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564072268 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564072569 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564072871 UTC.
+
+ ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+wdt reset
+load 0x4010f000, len 1384, room 16 
+tail 8
+chksum 0x2d
+csum 0x2d
+v8b899c12
+~ld
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 25.07.2019 UTC
+UTC time in internal RTC is 16:46:02 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 25.07.2019 UTC
+UTC time from NTP server is 16:46:03 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564073464 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564073766 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564074067 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564074368 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564074669 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564074970 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564075271 UTC.
+
+ ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+wdt reset
+load 0x4010f000, len 1384, room 16 
+tail 8
+chksum 0x2d
+csum 0x2d
+v8b899c12
+~ld
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 25.07.2019 UTC
+UTC time in internal RTC is 17:21:37 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 25.07.2019 UTC
+UTC time from NTP server is 17:21:38 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564075600 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564075901 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564076202 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564076503 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564076804 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564077105 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564077406 UTC.
+Syncing with internal RTC @1564077707 UTC.
+
+ ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+wdt reset
+load 0x4010f000, len 1384, room 16 
+tail 8
+chksum 0x2d
+csum 0x2d
+v8b899c12
+~ld
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 25.07.2019 UTC
+UTC time in internal RTC is 18:03:28 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 25.07.2019 UTC
+UTC time from NTP server is 18:03:29 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564078111 UTC.
+
+ ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+wdt reset
+load 0x4010f000, len 1384, room 16 
+tail 8
+chksum 0x2d
+csum 0x2d
+v8b899c12
+~ld
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 25.07.2019 UTC
+UTC time in internal RTC is 18:13:22 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 25.07.2019 UTC
+UTC time from NTP server is 18:13:23 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564078705 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564079006 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564079307 UTC.
+Syncing with internal RTC @1564079608 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564079909 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564080210 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564080511 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564080812 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564081113 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564081414 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564081715 UTC.
+Syncing with internal RTC @1564082016 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564082317 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564082618 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564082919 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564083220 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564083521 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564083822 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564084123 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564084424 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564084726 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564085027 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564085328 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564085629 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564085930 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564086231 UTC.
+Syncing with internal RTC @1564086532 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564086833 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564087134 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564087435 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564087736 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564088037 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564088338 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564088639 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564088940 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564089241 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564089542 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564089843 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564090144 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564090445 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564090746 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564091048 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564091349 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564091650 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564091951 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564092252 UTC.
+Syncing with internal RTC @1564092559 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564092861 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564093162 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564093463 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564093764 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564094065 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564094366 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564094667 UTC.
+Syncing with internal RTC @1564094968 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564095270 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564095571 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564095872 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564096173 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564096475 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564096776 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564097077 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564097378 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564097679 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564097980 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564098281 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564098582 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564098883 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564099184 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564099486 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564099788 UTC.
+
+ ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+wdt reset
+load 0x4010f000, len 1384, room 16 
+tail 8
+chksum 0x2d
+csum 0x2d
+v8b899c12
+~ld
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 26.07.2019 UTC
+UTC time in internal RTC is 00:12:44 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 26.07.2019 UTC
+UTC time from NTP server is 00:12:45 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+
+ ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+wdt reset
+load 0x4010f000, len 1384, room 16 
+tail 8
+chksum 0x2d
+csum 0x2d
+v8b899c12
+~ld
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 26.07.2019 UTC
+UTC time in internal RTC is 00:13:54 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 26.07.2019 UTC
+UTC time from NTP server is 00:13:56 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Syncing with internal RTC @1564100337 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564100638 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564100939 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564101240 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564101541 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564101842 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564102143 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564102444 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564102745 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564103046 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564103347 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564103648 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564103949 UTC.
+Syncing with internal RTC @1564104250 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564104551 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564104852 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564105153 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564105454 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564105756 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564106057 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564106358 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564106659 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564106960 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564107261 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564107562 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564107863 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564108164 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564108465 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564108766 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564109067 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564109368 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564109669 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564109970 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564110271 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564110573 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564110874 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564111175 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564111477 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564111778 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564112079 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564112380 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564112681 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564112982 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564113283 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564113584 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564113886 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564114187 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564114488 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564114789 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564115090 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564115391 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564115692 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564115993 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564116294 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564116595 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564116896 UTC.
+Syncing with internal RTC @1564117203 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564117505 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564117806 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564118107 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564118408 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564118709 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564119010 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564119311 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564119612 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564119914 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564120215 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564120516 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564120817 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564121118 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564121419 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564121720 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564122021 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564122322 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564122623 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564122924 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564123225 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564123526 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564123827 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564124128 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564124429 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564124730 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564125031 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564125332 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564125633 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564125934 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564126236 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564126537 UTC.
+Syncing with internal RTC @1564126838 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564127139 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564127440 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564127741 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564128042 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564128343 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564128644 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564128945 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564129246 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564129548 UTC.
+
+ ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+wdt reset
+load 0x4010f000, len 1384, room 16 
+tail 8
+chksum 0x2d
+csum 0x2d
+v8b899c12
+~ld
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 26.07.2019 UTC
+UTC time in internal RTC is 08:29:04 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 26.07.2019 UTC
+UTC time from NTP server is 08:29:05 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564130046 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564130347 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564130648 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564130949 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564131250 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564131551 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564131852 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564132154 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564132455 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564132756 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564133057 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564133358 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564133659 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564133960 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564134261 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564134562 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564134863 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564135164 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564135465 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564135766 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564136067 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564136368 UTC.
+Syncing with internal RTC @1564136675 UTC.
+
+Exception (29):
+epc1=0x40223b6f epc2=0x00000000 epc3=0x00000000 excvaddr=0x00000019 depc=0x00000000
+
+>>>stack>>>
+
+ctx: sys
+sp: 3ffffc80 end: 3fffffb0 offset: 01a0
+3ffffe20:  3ffffe40 40223ccf 3ffed24c 4000050c  
+3ffffe30:  4010032e 00000030 00000010 ffffffff  
+3ffffe40:  00000018 3fff02b4 00000008 3ffed99c  
+3ffffe50:  3ffe8a75 3ffe8a75 3fff06af 40225c83  
+3ffffe60:  3ffed950 40225854 40227eb4 3ffed950  
+3ffffe70:  402253d0 ae1874d1 60000600 00000030  
+3ffffe80:  00000001 00000004 00000000 3fffdab0  
+3ffffe90:  4022588f 3ffeda48 3ffeda48 00000000  
+3ffffea0:  402277fc 00000001 3ffe8530 00000000  
+3ffffeb0:  3ffed2f4 402277c0 3ffed24c 00000012  
+3ffffec0:  40225844 40225818 3ffed2f4 00000012  
+3ffffed0:  402257e3 3ffed24c 00000012 00000030  
+3ffffee0:  40225d94 3ffed24c 00000000 40227eb4  
+3ffffef0:  402257c1 3ffed3c8 00000002 00000000  
+3fffff00:  40227c6d 00008000 3ffee130 ae18c0ea  
+3fffff10:  60000600 00008000 3ffed468 40227ac1  
+3fffff20:  40227acc 3fff02b8 00100001 3fffdab0  
+3fffff30:  40227e30 3fff02b8 3ffee130 ae18c0ea  
+3fffff40:  3fff02b4 40227e4d 3ffed24c 00000000  
+3fffff50:  40236211 3fff02b8 3ffee130 ae1874d1  
+3fffff60:  40236256 3fffdab0 00000000 3fffdcb0  
+3fffff70:  3ffee148 3fffdad0 3ffee918 4020747b  
+3fffff80:  40000f49 40000f49 3fffdab0 40000f49  
+3fffff90:  40000e19 40001878 00000004 00000000  
+3fffffa0:  3fffff10 aa55aa55 00000030 40104708  
+<<<stack<<<
+
+last failed alloc call: 401006BC(76)
+
+ ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+wdt reset
+load 0x4010f000, len 1384, room 16 
+tail 8
+chksum 0x2d
+csum 0x2d
+v8b899c12
+~ld
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3532264, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.107
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 26.07.2019 UTC
+UTC time in internal RTC is 10:29:19 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 26.07.2019 UTC
+UTC time from NTP server is 10:29:21 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564137262 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564137563 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564137864 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564138165 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564138466 UTC.
+
+--- exit ---
+
+Terminal will be reused by tasks, press any key to close it.
+
+# Anmerkungen - soweit
+
+* ets Jan  8 2013,rst cause:4, boot mode:(3,6)
+
+  "rst cause: 4" steht für WDT reset 
+  ** Quelle: https://github.com/esp8266/Arduino/issues/1013
+     siehe "h4rm0n1c"
+  ** Link: https://www.esp8266.com/viewtopic.php?p=2096#p2112
+     reset causes:
+        0:
+        1: normal boot
+        2: reset pin
+        3: software reset
+        4: watchdog reset
+
+* Analyse ab Zeile 552
+  - Durch main.cpp, setSyncProvider(&timeProvider); scheinen alle 301 Sekunden
+    Zeitsynchronisationen durchgeführt zu werden.
+  - D.h. nach "@1564136368 UTC" wäre der nächste Sync um 1564136669 fällig
+    gewesen.
+  - Anscheinend hat der NTP-Zugriff nicht geklappt, weshalb um @1564136675 UTC,
+    also 6 Sekunden später, der vorgesehende RTC-Sync durchgeführt wurde.
+  - "Exception (29)" steht nach "doc/xtensa-isa.pdf", Table 4–64, für
+    "StoreProhibitedCause" also eine Speicherschutzverletzung.
+  - In Zeile 556 steht "epc1=0x40223b6f"; durch den Aufruf von
+    "~/.platformio/packages/toolchain-xtensa/bin/xtensa-lx106-elf-objdump -d \
+    /home/hoffmann/git/vfd-clock/.pio/build/esp01_1m/firmware.elf | less"
+    konnte für die Adresse 0x40223b6f, die Anweisung "s8i a4, a2, 1" ermittelt
+    werden, also eine "8-bit store"-Anweisung, siehe genanntes PDF, Seite 504.
+    Die ausgeführte Funktion war dabei <ieee80211_add_xrates>, also eine
+    WiFi-Funktion. Die Quelladresse steht im $a4, die Zieladresse ergibt
+    sich aus "$a2+1". Die Werte von $a2 und $a4 sind mir nicht bekannt.
+  - Nach "4.4.1.6" könnte der Wert "excvaddr=0x00000019" die Adresse sein,
+    bei der durch s8i die Exception ausgelöst wurde.
+  - In 19,5h stürzte die Uhr 8-mal ab, vermutlich durch Probleme im
+    gegenwärtigen WiFi-System.
+  - Die ieee80211_add_xrates-Funktion ist für espressif8266 in der Library
+    libnet80211.a zu finden, siehe
+    "find ~/.platformio -type f -exec grep ieee80211_add_xrates {} /dev/null \;"
+  - Die Tools-Versionen von NONOSDK221, NONOSDK22x und NONOSDK3V0 scheinen
+    gemäß der version Datei v2.1.0-10-g509eae8, v2.2.1-61-gc7b580c und
+    v2.2.0-28-g89920dc zu sein.
+  - In "~/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src"
+    lies sich nicht einmal eine Datei finden, deren eigentlicher Quellcode "rates"
+    enthielt: Befehl war "find . -type f -exec grep rates {} /dev/null \;".
