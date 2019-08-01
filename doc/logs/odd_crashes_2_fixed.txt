@@ -1,0 +1,222 @@
+> Executing task: platformio device monitor <
+
+--- Miniterm on /dev/ttyUSB0  115200,8,N,1 ---
+--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
+
+  ******   VFD Clock - Ver 1.2   ******
+Running on Espressif Generic ESP8266 ESP-01 1M SoC module
+ChipId 3531804, 80 MHz clock speed, 1048576 bytes flash @40.0 MHz
+
+ -- VFD 8 tubes 7-Seg display startup --
+Setting blanking inactive and turn on heating
+Your display should indicate "  42  " now
+
+ -- 42nibbles VFD network startup --
+*WM: 
+*WM: AutoConnect
+*WM: Connecting as wifi client...
+*WM: Already connected. Bailing out.
+*WM: IP Address:
+*WM: 192.168.0.123
+connected...yeey :)
+Creating UDP client port 2390...                                        [passed]
+
+ -- 42nibbles VFD clock startup --
+Installed timezone is 'Europe/Berlin', CEST, CET
+Starting background clock syncing system
+Accessing DS1307/DS1308 real time clock on I2C bus (SLAVE 0x68)...      [passed]
+UTC date in internal RTC is 31.07.2019 UTC
+UTC time in internal RTC is 16:08:31 UTC
+Trying NTP server query from (europe.pool.ntp.org)...                   [passed]
+Time from NTP server received.  Synchronized RTC with time server.
+UTC date from NTP server is 31.07.2019 UTC
+UTC time from NTP server is 16:08:33 UTC
+
+Running clock in endless loop...
+*WM: freeing allocated params!
+Time from NTP server received.  Synchronized RTC with time server @1564589614 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564589915 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564590216 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564590517 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564590818 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564591119 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564591420 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564591722 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564592023 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564592324 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564592625 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564592926 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564593227 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564593528 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564593829 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564594130 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564594431 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564594732 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564595033 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564595334 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564595636 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564595937 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564596238 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564596539 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564596840 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564597141 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564597442 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564597743 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564598044 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564598345 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564598646 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564598947 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564599248 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564599549 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564599850 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564600151 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564600452 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564600753 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564601054 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564601355 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564601656 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564601957 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564602258 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564602559 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564602860 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564603161 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564603462 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564603763 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564604064 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564604366 UTC.
+Syncing with internal RTC @1564604667 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564604968 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564605269 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564605570 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564605871 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564606172 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564606473 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564606774 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564607075 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564607376 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564607677 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564607978 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564608279 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564608580 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564608882 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564609183 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564609484 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564609785 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564610086 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564610387 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564610688 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564610989 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564611290 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564611591 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564611892 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564612193 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564612494 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564612795 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564613096 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564613397 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564613699 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564614000 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564614301 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564614602 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564614903 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564615204 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564615505 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564615806 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564616107 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564616408 UTC.
+Syncing with internal RTC @1564616709 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564617010 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564617311 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564617612 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564617914 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564618215 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564618516 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564618817 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564619118 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564619419 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564619720 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564620021 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564620323 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564620624 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564620925 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564621226 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564621527 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564621828 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564622129 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564622430 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564622731 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564623032 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564623334 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564623635 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564623936 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564624237 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564624538 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564624839 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564625140 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564625441 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564625742 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564626043 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564626344 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564626645 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564626947 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564627248 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564627549 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564627850 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564628151 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564628452 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564628753 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564629054 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564629355 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564629656 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564629958 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564630259 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564630560 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564630861 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564631162 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564631463 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564631764 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564632065 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564632366 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564632667 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564632968 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564633269 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564633571 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564633872 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564634173 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564634474 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564634775 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564635076 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564635377 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564635678 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564635979 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564636280 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564636581 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564636882 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564637183 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564637484 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564637785 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564638086 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564638387 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564638688 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564638990 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564639291 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564639592 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564639893 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564640194 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564640495 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564640796 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564641097 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564641398 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564641699 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564642001 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564642302 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564642603 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564642904 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564643205 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564643506 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564643807 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564644108 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564644409 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564644710 UTC.
+Time from NTP server received.  Synchronized RTC with time server @1564645011 UTC.
+

@@ -158,7 +158,7 @@ void setup()
   delay(256UL);
 
   // Send greetings message to serial.  Startup VFD tubes and display "  42  ".
-  Serial.println(F("\n  ******   VFD Clock - Ver 1.2   ******"));
+  Serial.println(F("\n  ******   VFD Clock - Ver 1.3   ******"));
   Serial.println(F("Running on Espressif Generic ESP8266 ESP-01 1M SoC module"));
   Serial.printf("ChipId %u, %i MHz clock speed, %u bytes flash @%2.1f MHz\n", ESP.getChipId(),
                 ESP.getCpuFreqMHz(), ESP.getFlashChipSize(), (ESP.getFlashChipSpeed() / 1000000.0));

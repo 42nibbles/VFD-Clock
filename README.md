@@ -1,4 +1,4 @@
-# VFD Clock_1.2
+# VFD Clock_1.3
 
 ## Übersetzen unter Windows
 
